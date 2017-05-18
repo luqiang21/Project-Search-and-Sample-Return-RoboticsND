@@ -31,7 +31,11 @@ def color_thresh(img, rgb_thresh=(160, 160, 160)):
     color_unselect = np.ones_like(img[:,:,0])
     color_unselect[above_thresh] = 0
     # Return the binary image
-    return color_select, color_unselect
+    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    obstacle = np.bitwise_and(color_unselect, img_gray)
+    # Return the binary image
+    return color_select, obstacle#color_unselect
+    # return color_select, color_unselect
 
 # Define a function to convert to rover-centric coordinates
 def rover_coords(binary_img):
